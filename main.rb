@@ -21,10 +21,59 @@ names = [
   { national_id: "uid20", name: "Michael", age: 19 }
 ]
 
+# second task
+puts "TASK 2"
 sum = 0
 names.each do
-  puts names[sum][:name]
+  puts names[sum][:name] #print out names only
   sum += 1
 end
+
+# third task
+# puts "TASK 3"
+person_national_id = ""
+person_name = ""
+person_age = 0
+national_id_only = []
+
+print "\nEnter the national id: "
+person_national_id = gets.chomp
+
+# national id checking
+iterate_1 = 0
+names.each do
+  national_id_only.push(names[iterate_1][:national_id])
+  iterate_1 += 1
+end
+
+checking_national_id = national_id_only.include?(person_national_id)
+
+while checking_national_id == true
+  puts "\nFailed to add: National ID already exists."
+  print "Enter another value: "
+  person_national_id = gets.chomp
+  checking_national_id = national_id_only.include?(person_national_id)
+end
+
+print "Enter the name: "
+person_name = gets.chomp
+print "Enter the age: "
+person_age = gets.chomp.to_i
+
+hash_temp =   { national_id: person_national_id, name: person_name, age: person_age }
+if person_national_id.empty? == false && person_name.empty? == false && person_age != 0
+  names.push(hash_temp)
+  puts "\nUser added successfully!"
+end
+
+puts "Updated List of Users"
+puts names
+
+
+
+
+
+
+
 
 
