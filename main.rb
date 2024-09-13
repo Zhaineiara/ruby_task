@@ -21,6 +21,7 @@ names = [
   { national_id: "uid20", name: "Michael", age: 19 }
 ]
 
+
 # second task
 puts "TASK 2"
 sum = 0
@@ -29,14 +30,15 @@ names.each do
   sum += 1
 end
 
+
 # third task
-# puts "TASK 3"
+puts "\nTASK 3"
 person_national_id = ""
 person_name = ""
 person_age = 0
 national_id_only = []
 
-print "\nEnter the national id: "
+print "Enter the national id: "
 person_national_id = gets.chomp
 
 # national id checking
@@ -66,10 +68,126 @@ if person_national_id.empty? == false && person_name.empty? == false && person_a
   puts "\nUser added successfully!"
 end
 
-puts "Updated List of Users"
-puts names
+puts "\nUpdated List of Users"
+puts names #for checking if it works
 
 
+# fourth task
+puts "\nTASK 4"
+yes_or_no = ""
+add_delete_option = ""
+print "Do you want another option?(y|n): "
+yes_or_no = gets.chomp
+
+if yes_or_no == 'y'
+  print "Enter your choice (add_user | delete_user): "
+  add_delete_option = gets.chomp
+
+  # DELETE
+  delete_national_number = ""
+  if add_delete_option == 'delete_user'
+    puts "\nDELETE OPTION"
+    print "Enter the national id number: "
+    delete_national_number = gets.chomp
+
+    included = names.any? { |person| person[:national_id] == delete_national_number }
+    if included == true
+      index_of_national_id = names.find_index {|person| person[:national_id] == delete_national_number}
+      names.delete_at(index_of_national_id)
+      print "Successfully deleted"
+      puts names
+    elsif included == false
+      puts "User not found."
+    end
+
+  # ADD
+  elsif add_delete_option == 'add_user'
+    person_national_id = ""
+    person_name = ""
+    person_age = 0
+    national_id_only = []
+
+    print "\nEnter the national id: "
+    person_national_id = gets.chomp
+
+    # national id checking
+    iterate_1 = 0
+    names.each do
+      national_id_only.push(names[iterate_1][:national_id])
+      iterate_1 += 1
+    end
+
+    checking_national_id = national_id_only.include?(person_national_id)
+
+    while checking_national_id == true
+      puts "\nFailed to add: National ID already exists."
+      print "Enter another value: "
+      person_national_id = gets.chomp
+      checking_national_id = national_id_only.include?(person_national_id)
+    end
+
+    print "Enter the name: "
+    person_name = gets.chomp
+    print "Enter the age: "
+    person_age = gets.chomp.to_i
+
+    hash_temp =   { national_id: person_national_id, name: person_name, age: person_age }
+    if person_national_id.empty? == false && person_name.empty? == false && person_age != 0
+      names.push(hash_temp)
+      puts "\nUser added successfully!"
+    end
+
+    puts "\nUpdated List of Users"
+    puts names #for checking if it works
+  end
+
+elsif yes_or_no == 'n'
+  puts "\nInvalid value. System exit."
+end
+
+
+
+
+
+# #first condition: THE YES ANSWER
+# if yes_or_no == 'y'
+#   print "Enter the national id: "
+#   person_national_id = gets.chomp
+#
+#   #national id checking version 1
+#   # iterate_1 = 0
+#   # names.each do
+#   #   #puts names[iterate_1][:national_id] #print out names only
+#   #   iterate_1 += 1
+#   #
+#   #   id_checking = names.include?(person_national_id)
+#   #   puts id_checking
+#   #   # if id_checking == true
+#   #   #   print "Invalid national id. Enter another one: "
+#   #   # end
+#   # end
+#
+#   #national id checking version 2
+#
+#
+#   print "Enter the name: "
+#   person_name = gets.chomp
+#   print "Enter the age: "
+#   person_age = gets.chomp.to_i
+#
+# =begin # to check the inputted value
+#     p national_id
+#     p person_name
+#     p person_age
+# =end
+#
+#   #second condition: THE NO ANSWER
+# elsif yes_or_no == 'n'
+#   puts "\nUser don't want to add another person. System exit."
+#   break
+# end
+#
+# end
 
 
 
