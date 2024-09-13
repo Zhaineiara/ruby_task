@@ -69,7 +69,9 @@ if person_national_id.empty? == false && person_name.empty? == false && person_a
 end
 
 puts "\nUpdated List of Users"
-puts names #for checking if it works
+modified_names_1 = names.reverse
+
+puts modified_names_1 #displaying at the top of the list
 
 
 # fourth task
@@ -95,7 +97,10 @@ if yes_or_no == 'y'
       index_of_national_id = names.find_index {|person| person[:national_id] == delete_national_number}
       names.delete_at(index_of_national_id)
       print "Successfully deleted"
-      puts names
+
+      modified_names_2 = names.reverse
+      puts modified_names_2
+
     elsif included == false
       puts "User not found."
     end
@@ -138,7 +143,8 @@ if yes_or_no == 'y'
     end
 
     puts "\nUpdated List of Users"
-    puts names #for checking if it works
+    modified_names_3 = names.reverse
+    puts modified_names_3
   end
 
 elsif yes_or_no == 'n'
