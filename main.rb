@@ -146,9 +146,6 @@ def edit_user_option(array_names)
     index_of_national_id = array_names.find_index {|person| person[:national_id] == given_national_id}
     array_names[index_of_national_id][:name] = new_name
     array_names[index_of_national_id][:age] = new_age
-
-    puts array_names[index_of_national_id][:name]
-    puts array_names[index_of_national_id][:age]
   end
 
   puts "\nSuccessfully updated!"
