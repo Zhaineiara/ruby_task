@@ -1,3 +1,4 @@
+# The hashes of array
 names = [
   { national_id: "uid1", name: "Precious", age: 21 },
   { national_id: "uid2", name: "Mico", age: 22 },
@@ -22,182 +23,179 @@ names = [
 ]
 
 
-# second task
-puts "TASK 2"
-sum = 0
-names.each do
-  puts names[sum][:name] #print out names only
-  sum += 1
+# Function to display the last user at the top
+def display_users(users)
+  puts "\nList of Users:"
+
+  if users.any? 
+    last_user = users.pop
+    puts "#{last_user[:national_id]} - #{last_user[:name]} (Age: #{last_user[:age]})"
+
+    users.each do |user|
+      puts "#{user[:national_id]} - #{user[:name]} (Age: #{user[:age]})"
+    end
+    puts "\n"
+    users.push(last_user)
+  else
+    puts "No users to display."
+  end
 end
 
 
-# third task
-puts "\nTASK 3"
-person_national_id = ""
-person_name = ""
-person_age = 0
-national_id_only = []
+# Function to ask add_delete_edit_exit
+def adee_option(user_names)
+  loop do
+    print "What action do you want to take? (add_user|delete_user|edit_user|exit): "
+    action_adee = gets.chomp
 
-print "Enter the national id: "
-person_national_id = gets.chomp
-
-# national id checking
-iterate_1 = 0
-names.each do
-  national_id_only.push(names[iterate_1][:national_id])
-  iterate_1 += 1
+    case action_adee
+      when 'add_user'
+        add_user_option(user_names)
+      when 'delete_user'
+        delete_user_option(user_names)
+      when 'edit_user'
+        edit_user_option(user_names)
+      when 'exit'
+        exit_confirmation
+        break
+    else
+      puts "\nInvalid Input. Enter a valid one."
+    end    
+  end
 end
 
-checking_national_id = national_id_only.include?(person_national_id)
 
-while checking_national_id == true
-  puts "\nFailed to add: National ID already exists."
-  print "Enter another value: "
-  person_national_id = gets.chomp
-  checking_national_id = national_id_only.include?(person_national_id)
-end
+# Function to add another user in an array
+def add_user_option(array_names)
+  print "Enter national ID: "
+  given_national_id = gets.chomp
 
-print "Enter the name: "
-person_name = gets.chomp
-print "Enter the age: "
-person_age = gets.chomp.to_i
+  #check if id is unique
+  checking_given_id = id_uniqueness_check(array_names, given_national_id)
 
-hash_temp =   { national_id: person_national_id, name: person_name, age: person_age }
-if person_national_id.empty? == false && person_name.empty? == false && person_age != 0
-  names.push(hash_temp)
-  puts "\nUser added successfully!"
-end
-
-puts "\nUpdated List of Users"
-modified_names_1 = names.reverse
-
-puts modified_names_1 #displaying at the top of the list
-
-
-# fourth task
-puts "\nTASK 4"
-yes_or_no = ""
-add_delete_option = ""
-print "Do you want another option?(y|n): "
-yes_or_no = gets.chomp
-
-if yes_or_no == 'y'
-  print "Enter your choice (add_user | delete_user): "
-  add_delete_option = gets.chomp
-
-  # DELETE
-  delete_national_number = ""
-  if add_delete_option == 'delete_user'
-    puts "\nDELETE OPTION"
-    print "Enter the national id number: "
-    delete_national_number = gets.chomp
-
-    included = names.any? { |person| person[:national_id] == delete_national_number }
-    if included == true
-      index_of_national_id = names.find_index {|person| person[:national_id] == delete_national_number}
-      names.delete_at(index_of_national_id)
-      print "Successfully deleted"
-
-      modified_names_2 = names.reverse
-      puts modified_names_2
-
-    elsif included == false
-      puts "User not found."
-    end
-
-  # ADD
-  elsif add_delete_option == 'add_user'
-    person_national_id = ""
-    person_name = ""
-    person_age = 0
-    national_id_only = []
-
-    print "\nEnter the national id: "
-    person_national_id = gets.chomp
-
-    # national id checking
-    iterate_1 = 0
-    names.each do
-      national_id_only.push(names[iterate_1][:national_id])
-      iterate_1 += 1
-    end
-
-    checking_national_id = national_id_only.include?(person_national_id)
-
-    while checking_national_id == true
-      puts "\nFailed to add: National ID already exists."
-      print "Enter another value: "
-      person_national_id = gets.chomp
-      checking_national_id = national_id_only.include?(person_national_id)
-    end
-
-    print "Enter the name: "
-    person_name = gets.chomp
-    print "Enter the age: "
-    person_age = gets.chomp.to_i
-
-    hash_temp =   { national_id: person_national_id, name: person_name, age: person_age }
-    if person_national_id.empty? == false && person_name.empty? == false && person_age != 0
-      names.push(hash_temp)
-      puts "\nUser added successfully!"
-    end
-
-    puts "\nUpdated List of Users"
-    modified_names_3 = names.reverse
-    puts modified_names_3
+  while checking_given_id == true
+    puts "\nFailed to add: National ID already exists."
+    print "Enter national ID: "
+    given_national_id = gets.chomp
+    checking_given_id = id_uniqueness_check(array_names, given_national_id)
   end
 
-elsif yes_or_no == 'n'
-  puts "\nInvalid value. System exit."
+  print "Enter name: "
+  given_name = gets.chomp
+  print "Enter age: "
+  given_age = gets.chomp.to_i
+
+  # Add given data to the array
+  array_names.append({national_id: given_national_id, name: given_name, age: given_age })
+
+  puts "\nUser added successfully!"
+  display_users(array_names)
+
+  another_option_question(array_names)
 end
 
 
+# Function to delete user in an array
+def delete_user_option(array_names)
+  print "Enter national ID: "
+  given_national_id = gets.chomp
+
+  #check if id it exist in the array
+  checking_given_id = id_uniqueness_check(array_names, given_national_id)
+
+  while checking_given_id == false
+    puts "\nUser not found"
+    print "Enter national ID: "
+    given_national_id = gets.chomp
+    checking_given_id = id_uniqueness_check(array_names, given_national_id)
+  end
+
+  if checking_given_id == true
+    index_of_national_id = array_names.find_index {|person| person[:national_id] == given_national_id}
+    array_names.delete_at(index_of_national_id)
+  end
+
+  puts "\nSuccessfully deleted!"
+  display_users(array_names)
+
+  another_option_question(array_names)
+end
 
 
+# Function to edit user in an array
+def edit_user_option(array_names)
+  print "Enter national ID: "
+  given_national_id = gets.chomp
 
-# #first condition: THE YES ANSWER
-# if yes_or_no == 'y'
-#   print "Enter the national id: "
-#   person_national_id = gets.chomp
-#
-#   #national id checking version 1
-#   # iterate_1 = 0
-#   # names.each do
-#   #   #puts names[iterate_1][:national_id] #print out names only
-#   #   iterate_1 += 1
-#   #
-#   #   id_checking = names.include?(person_national_id)
-#   #   puts id_checking
-#   #   # if id_checking == true
-#   #   #   print "Invalid national id. Enter another one: "
-#   #   # end
-#   # end
-#
-#   #national id checking version 2
-#
-#
-#   print "Enter the name: "
-#   person_name = gets.chomp
-#   print "Enter the age: "
-#   person_age = gets.chomp.to_i
-#
-# =begin # to check the inputted value
-#     p national_id
-#     p person_name
-#     p person_age
-# =end
-#
-#   #second condition: THE NO ANSWER
-# elsif yes_or_no == 'n'
-#   puts "\nUser don't want to add another person. System exit."
-#   break
-# end
-#
-# end
+  #check if id it exist in the array
+  checking_given_id = id_uniqueness_check(array_names, given_national_id)
+
+  while checking_given_id == false
+    puts "\nUser not found"
+    print "Enter national ID: "
+    given_national_id = gets.chomp
+    checking_given_id = id_uniqueness_check(array_names, given_national_id)
+  end
+
+  if checking_given_id == true
+    print "Enter new name: "
+    new_name = gets.chomp
+    print "Enter new age: "
+    new_age = gets.chomp.to_i
+
+    index_of_national_id = array_names.find_index {|person| person[:national_id] == given_national_id}
+    array_names[index_of_national_id][:name] = new_name
+    array_names[index_of_national_id][:age] = new_age
+
+    puts array_names[index_of_national_id][:name]
+    puts array_names[index_of_national_id][:age]
+  end
+
+  puts "\nSuccessfully updated!"
+  display_users(array_names)
+
+  another_option_question(array_names)
+end
 
 
+# Function for exit confirmation
+def exit_confirmation
+  print "Are you sure you want to exit? (y/n): "
+  yes_no = gets.chomp
+
+  if yes_no == 'y'
+    puts "\nSystem exit."
+    exit
+  end
+end
 
 
+# Function to check if the given national id it in the array
+def id_uniqueness_check(given_array, given_id)
+  given_array.any? {|item| item[:national_id] == given_id}
+end
 
 
+# Function to ask user if want to have another options. Will be redirect to ADEE function
+def another_option_question(array_names)
+loop do
+  print "Do you want another option? (y|n): "
+  another_option = gets.chomp
 
+  case another_option
+    when 'n'
+      exit_confirmation
+    when 'y'
+      adee_option(array_names)
+    else
+      puts "\nInvalid input."
+    end
+  end
+end
+
+
+# Main start of code
+loop do
+  display_users(names)
+  another_option_question(names)
+end
