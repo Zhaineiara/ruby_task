@@ -63,6 +63,8 @@ def delete_user(array_names)
   #check if id it exist in the array
   item_included = item_existence(array_names, national_id)
 
+  #loop if national id is not found
+  #user_not_found(item_included, national_id, array_names)
   while item_included == false
     puts "\nUser not found"
     print "Enter national ID: "
@@ -111,6 +113,34 @@ def edit_user(array_names)
   puts "\nSuccessfully updated!"
 end
 
+# Function to search for a user by national ID
+def search_user(array_names)
+  clear_screen
+  puts "SEARCH USER"
+  print "Enter national ID: "
+  national_id = gets.chomp
+
+  # Check if the ID exists in the array
+  item_included = item_existence(array_names, national_id)
+
+  while item_included == false
+    puts "\nUser not found"
+    print "Enter national ID: "
+    national_id = gets.chomp
+    item_included = item_existence(array_names, national_id)
+  end
+
+  clear_screen
+  puts "\nSuccessfully found!"
+  if item_included
+    user = array_names.find { |person| person[:national_id] == national_id }
+    puts "\nDATA IN THE GIVEN NATIONAL ID"
+    puts "Name: #{user[:name]}"
+    puts "Age: #{user[:age]}"
+  end
+
+end
+
 # Function for exit confirmation
 def exit_confirmation
   clear_screen
@@ -148,7 +178,8 @@ loop do
 (1). add_user
 (2). delete_user
 (3). edit_user
-(4). exit
+(4). search user
+(5). exit
 Enter the number: "
   action = gets.chomp
 
@@ -159,6 +190,8 @@ Enter the number: "
     delete_user(names)
   when '3'
     edit_user(names)
+  when '4'
+    search_user(names)
   when '4'
     exit_confirmation
   else
