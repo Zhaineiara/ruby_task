@@ -38,6 +38,18 @@ class Person
     end
   end
 
+  def update(name: @name, age: @age, national_id: @national_id)
+    @name = name if name
+    @age = age if age
+    @national_id = national_id if national_id
+
+    person = @@records.find { |record| record[:national_id] == @national_id }
+    if person
+      person[:name] = @name
+      person[:age] = @age
+      person[:national_id] = @national_id
+    end
+  end
 
 end
 
@@ -51,8 +63,9 @@ p_2.save
 #puts Person.all
 #puts p_1.first
 #puts p_1.last
-puts Person.find_by_national_id("uid1")
-
+#puts Person.find_by_national_id("uid1")
+p_1.update(name:"Dan", national_id: "uid1")
+puts Person.all.inspect
 
 
 # names = [
