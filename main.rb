@@ -51,6 +51,10 @@ class Person
     end
   end
 
+  def destroy
+    @@records.pop
+  end
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
@@ -64,8 +68,10 @@ p_2.save
 #puts p_1.first
 #puts p_1.last
 #puts Person.find_by_national_id("uid1")
-p_1.update(name:"Dan", national_id: "uid1")
-puts Person.all.inspect
+#p_1.update(name:"Dan", national_id: "uid1")
+puts Person.all
+p_1.destroy
+puts Person.all
 
 
 # names = [
