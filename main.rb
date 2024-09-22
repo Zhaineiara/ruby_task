@@ -17,15 +17,22 @@ class Person
     @@records
   end
 
+  def first
+    @@records.first
+  end
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
 p_1.save
 p_2 = Person.new("Mico", 18, "uid2")
 p_2.save
-#puts Person.class_variable_get(:@@records).inspect # another way to display outside the class
 
-puts Person.all
+# DISPLAYS TO CHECK OUTPUTS
+#puts Person.class_variable_get(:@@records).inspect # another way to display outside the class
+#puts Person.all
+puts p_1.first
+
 
 
 # names = [
