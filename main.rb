@@ -13,14 +13,19 @@ class Person
     @@records.prepend({ name: @name, age: @age, national_id: @national_id })
   end
 
+  def self.all
+    @@records
+  end
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
 p_1.save
 p_2 = Person.new("Mico", 18, "uid2")
 p_2.save
-puts Person.class_variable_get(:@@records).inspect # another way to display outside the class
+#puts Person.class_variable_get(:@@records).inspect # another way to display outside the class
 
+puts Person.all
 
 
 # names = [
