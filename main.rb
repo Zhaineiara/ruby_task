@@ -59,6 +59,10 @@ class Person
     @@records.clear
   end
 
+  def self.count
+    @@records.size
+  end
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
@@ -75,8 +79,10 @@ p_2.save
 #p_1.update(name:"Dan", national_id: "uid1")
 # p_1.destroy
 puts Person.all
+puts Person.count
 Person.destroy_all
 puts Person.all
+puts Person.count
 
 
 # names = [
