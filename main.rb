@@ -21,6 +21,10 @@ class Person
     @@records.first
   end
 
+  def last
+    @@records.last
+  end
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
@@ -31,7 +35,8 @@ p_2.save
 # DISPLAYS TO CHECK OUTPUTS
 #puts Person.class_variable_get(:@@records).inspect # another way to display outside the class
 #puts Person.all
-puts p_1.first
+#puts p_1.first
+puts p_1.last
 
 
 
