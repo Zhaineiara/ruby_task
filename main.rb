@@ -29,6 +29,16 @@ class Person
     puts "Name: #{@name}\nAge: #{@age}\nNational ID: #{@national_id}"
   end
 
+  def self.find_by_national_id(id)
+    person = @@records.find { |record| record[:national_id] == id }
+    if person
+      puts "#{person[:name]}, #{person[:age]}, #{person[:national_id]}"
+    else
+      puts "Person not found"
+    end
+  end
+
+
 end
 
 p_1 = Person.new("Precious", 21, "uid1")
@@ -41,7 +51,7 @@ p_2.save
 #puts Person.all
 #puts p_1.first
 #puts p_1.last
-p_2.display
+puts Person.find_by_national_id("uid1")
 
 
 
