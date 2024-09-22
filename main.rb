@@ -1,3 +1,8 @@
+class Person
+  attr_accessor :name, :age, :national_id
+end
+
+
 names = [
   { national_id: "uid1", name: "Precious", age: 21 },
   { national_id: "uid2", name: "Mico", age: 22 },
